@@ -1,0 +1,12 @@
+<events>
+	<event SignageName="Private Event" Location="Studio J" TimeInterval="10:00AM - 4:30PM" />
+	<event SignageName="Normal Test for Digital Signage Project - Skylight Pavilion Venue" Location="Skylight Pavilion" TimeInterval="6:05PM - 6:10PM" />
+	<event SignageName="Conflicting Event 1 for Digital Signage Project - Skylight Pavilion"  Location="Skylight Pavilion" TimeInterval="7:05PM - 7:10PM" />
+	<event SignageName="Conflicting Event 2 for Digital Signage Project - Skylight Pavilion"  Location="Skylight Pavilion" TimeInterval="8:05PM - 8:10PM" />
+	<event SignageName="Book Review: Profiles in Courage"  Location="PT 109" TimeInterval="9:35PM - 9:55PM" />
+    <event SignageName="Book Review: Profiles in Courage"  Location="PT 109" TimeInterval="9:35PM - 9:55PM" />
+    <event SignageName="Conflicting Event 2 for Digital Signage Project - Skylight Pavilion"  Location="Skylight Pavilion" TimeInterval="8:05PM - 8:10PM" />
+    <event SignageName="Conflicting Event 1 for Digital Signage Project - Skylight Pavilion"  Location="Skylight Pavilion" TimeInterval="7:05PM - 7:10PM" />
+    <event SignageName="Normal Test for Digital Signage Project - Skylight Pavilion Venue" Location="Skylight Pavilion" TimeInterval="6:05PM - 6:10PM" />
+    <event SignageName="Annual Review Meeting: Education Endowment Board Meeting" Location="Studio J" TimeInterval="10:00AM - 4:30PM" />
+</events>

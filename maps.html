@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<link href="https://use.typekit.net/dvu4uoo.css" rel="stylesheet" type="text/css">
+
+<link href="style.css" rel="stylesheet" type="text/css">
+    
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js" type="text/javascript"></script>
+    
+
+<script>
+
+
+var fadeTime = 1000; // transition time in ms
+var duration = 10000; // time on each frame in ms
+
+$( document ).ready(function() {
+    
+    console.log( "ready!" );
+    
+    $('#controls a.btn-map').click(function(e) {
+
+        e.preventDefault();
+        clearTimeout(initial)
+        startTimeout();
+        
+        $(".btn-map").removeClass("active");
+        $(this).addClass("active");
+        var map_src = 'images/' + $(this).attr('data-image') + '.png';
+        console.log(map_src);
+        $("#map_image").attr("src",map_src);
+        
+    });
+    
+    var interval = setInterval(function() {
+        var momentNow = moment();
+        $('#time').html(momentNow.format('h:mm A'));
+    }, 100);
+    
+    var initial;
+    
+    function startTimeout() {
+        initial = window.setTimeout(function(){
+            window.location.href = "index.html"
+        },20000);
+    }
+    
+    startTimeout();
+    
+    
+});
+    
+    
+
+    
+
+
+</script>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <h1>Today at the REACH</h1>
+        </div>
+    </header>
+    <div id="main">
+        <h2>Maps</h2>
+        
+        <div>
+            <img id="map_image" src="images/REACH_Map_Grounds.png" width="100%" />
+        
+        </div>
+        
+        <div id="controls">
+            <a class="btn-map active" href="#" data-image="REACH_Map_Grounds">Grounds</a>
+            <a class="btn-map" href="#" data-image="REACH_Map_RiverPavilion">River Pavilion</a>
+            <a class="btn-map" href="#" data-image="REACH_Map_Level-A">Level A</a>
+            <a class="btn-map" href="#" data-image="REACH_Map_Level-B">Level B</a>
+        </div>
+                
+    </div>
+    
+    <footer>
+      <div class="top">
+        <div>
+             <a class="btn-map" href="index.html" id="showMap">Close Map</a>
+        </div>
+      </div>
+
+      <div class="bottom">
+        <div class="date">
+            <span id="time"></span>
+        </div>
+      </div>
+    </footer>
+
+</body>
+</html>

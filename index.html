@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link href="http://fonts.googleapis.com/css?family=Metrophobic rel="stylesheet type="text/css">
+<link href="https://use.typekit.net/dvu4uoo.css" rel="stylesheet" type="text/css">
+<link href="style.css" rel="stylesheet" type="text/css">
+    
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js" type="text/javascript"></script>
+
+<script>
+//var dataUrl = '/pylons/events';
+//var dataUrl = 'data.xml';
+var dataUrl = 'http://api.kennedy-center.org//api/Calendar/GetCalendarData/2019-7-25/2019-8-1';
+
+var currentPage = 0;
+//var slides = ['BUST1.png','BUST2.png','CAFE1.png','CAFE2.png','GIFT1.png','GIFT2.png','STAGE.png','STAGE2.png','TOURS1.png','TOURS2.png'];
+var slides =[];
+var fadeTime = 1000; // transition time in ms
+var duration = 10000; // time on each frame in ms
+    
+var testTime = "10:00PM"
+
+function getDate() {
+	var d = new Date();
+	var now  = d.getHours() % 12;
+	if (now == 0) {
+		now = "12";
+	}
+	now += ":"
+	if (d.getMinutes() < 10) {
+		now += "0";
+	}
+	now += d.getMinutes();
+	if (d.getHours() < 12) {
+		now += "AM";
+	}
+	else {
+		now += "PM";
+	}
+	return now;
+}
+    
+function updateDate() {
+	var d = new Date();
+	var now  = d.getHours() % 12;
+	if (now == 0) {
+		now = "12";
+	}
+	now += ":"
+	if (d.getMinutes() < 10) {
+		now += "0";
+	}
+	now += d.getMinutes();
+	if (d.getHours() < 12) {
+		now += "AM";
+	}
+	else {
+		now += "PM";
+	}
+	return now;
+}
+
+function getEvents() {
+	var d = (new Date()).getTime()
+	$.ajax({
+		url:dataUrl + '?d=' + d,
+		dataType:'json',
+		success:function(x) {
+
+			var page=0;
+			var html = '';
+
+			for(var i=0; i<x.length; i++) {
+				if (i % 5 == 0) {
+					page++;
+					if (i != 0) {
+                        html += '</div></div>\n\n';
+					}
+                    html += '<div class="page" id="page-'+page+'"><div class="eventlist">';
+				}
+			
+				var event =x[i];
+				var name = event.Title;
+				var venue = event.VenueDescription;
+				var time = event.DisplayPerfTime;
+                
+                html += '<div class="event">';
+                html += '<div class="event-time">' + time + '</div>';
+                html += '<div class="event-name">' + name + '</div>';
+                html += '<div class="event-venue">' + venue + '</div>';
+                html += '</div>';
+			}
+
+            html += '</div></div>\n\n';
+			for (var i=0; i<slides.length; i++) {
+				page++;
+				html += '<div class="page" id="page-' + page + '"><img src="images/' + slides[i] + '">';
+				html += '</div>\n\n';
+			}
+            
+			$('#wrapper').html(html);
+			doPaging();
+		}	,
+		error:function(x) {
+			doPaging();
+		}
+	});
+}
+
+function doPaging() {
+	$('#page-' + currentPage).fadeOut(fadeTime);
+	currentPage++;
+	    if (currentPage > $('.page').length) {
+		    currentPage = 0;
+		    getEvents();
+	    }
+	    else {
+		    $('#page-' + currentPage).fadeIn(fadeTime);
+		    window.setTimeout(doPaging,duration);
+	    }
+    }
+
+    $(document).ready(function () {
+        
+        var interval = setInterval(function() {
+            var momentNow = moment();
+            $('#time').html(momentNow.format('h:mm A'));
+        }, 1000);
+        
+        getEvents();
+
+});
+
+</script>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <h1>Today at the REACH</h1>
+        </div>
+    </header>
+    <div id="main">
+        <div class="event-header">
+                <div class="label-event">Time/Event</div>
+                <div class="label-venue">Location</div>
+            </div>
+        <div id="wrapper">
+            
+        </div>
+                
+    </div>
+    
+    <footer>
+      <div class="top">
+        <div>
+             <a class="btn-map" href="maps.html" id="showMap">Show Map</a>
+        </div>
+      </div>
+
+      <div class="bottom">
+        <div class="date">
+            <span id="time"></span>
+        </div>
+      </div>
+    </footer>
+
+</body>
+</html>
